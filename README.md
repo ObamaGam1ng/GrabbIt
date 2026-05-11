@@ -66,3 +66,4 @@ npm run build
 ## 📜 License
 
 MIT License. Feel free to use, modify, and distribute.
+Slopped together with love, by Obama Gaming 💕
