@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GrabbIt</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ── Custom Title Bar ─────────────────────────── -->
+  <header class="titlebar" id="titlebar">
+    <div class="titlebar-drag">
+      <img class="titlebar-icon" src="logo.png" alt="logo">
+      <span class="titlebar-label">GrabbIt</span>
+    </div>
+    <div class="titlebar-btns">
+      <button class="tb" id="btnMin" aria-label="Minimize">
+        <svg width="12" height="12" viewBox="0 0 12 12"><rect y="5" width="12" height="2" rx="1" fill="currentColor"/></svg>
+      </button>
+      <button class="tb" id="btnMax" aria-label="Maximize">
+        <svg width="12" height="12" viewBox="0 0 12 12"><rect x="1" y="1" width="10" height="10" rx="1.5" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
+      </button>
+      <button class="tb close" id="btnClose" aria-label="Close">
+        <svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 2l8 8M10 2l-8 8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- Setup banner -->
+    <div class="setup-banner" id="setupBanner">
+      <div class="spinner-sm"></div>
+      <span id="setupText">Initializing engine…</span>
+    </div>
+
+    <!-- Hero -->
+    <section class="hero" id="heroSection">
+      <img id="mainLogo" class="main-logo" src="logo.png" alt="GrabbIt Logo">
+      <h1 class="hero-title">Grabbit, Snip it, Clip it!</h1>
+      <p class="hero-sub">Paste a link — preview it — download as MP4 or MP3.</p>
+    </section>
+
+    <!-- URL bar -->
+    <div class="url-bar">
+      <div class="url-input-wrap">
+        <svg class="url-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>
+        <input type="text" id="urlInput" placeholder="https://youtube.com/watch?v=..." spellcheck="false" autocomplete="off">
+        <button id="fetchBtn" class="btn-fetch">
+          <span class="btn-fetch-label">Fetch</span>
+          <div class="spinner-sm btn-fetch-spin" style="display:none"></div>
+        </button>
+      </div>
+      <p class="error" id="errorMsg"></p>
+    </div>
+
+    <!-- Preview Card -->
+    <section class="card" id="previewCard">
+      <div class="card-thumb-wrap">
+        <img id="thumb" class="card-thumb" src="" alt="">
+        <video id="vidPlayer" class="card-video" style="display:none;"></video>
+        <!-- Custom Video Controls -->
+        <div class="vid-controls" id="vidControls" style="display:none;">
+          <button class="vc-play" id="vcPlayBtn">
+            <svg id="vcPlayIcon" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            <svg id="vcPauseIcon" style="display:none;" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+          </button>
+          <div class="vc-track" id="vcTrack">
+            <div class="vc-progress" id="vcProgress">
+              <div class="vc-thumb" id="vcThumb">
+                <div class="clip-tooltip" id="vcThumbTooltip">0:00.000</div>
+              </div>
+            </div>
+            <!-- Clipping UI -->
+            <div class="clip-range" id="clipRange" style="display:none;">
+              <div class="clip-hl" id="clipHl"></div>
+              <div class="clip-handle clip-start" id="clipStartHandle">
+                <div class="clip-tooltip" id="clipStartTooltip">0:00.000</div>
+              </div>
+              <div class="clip-handle clip-end" id="clipEndHandle">
+                <div class="clip-tooltip" id="clipEndTooltip">0:00.000</div>
+              </div>
+            </div>
+          </div>
+          <div class="vc-time" id="vcTime">0:00 / 0:00</div>
+        </div>
+        <button id="playBtn" class="play-overlay">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        </button>
+        <div id="playLoading" class="play-loading" style="display:none;">
+          <div class="spinner-sm"></div>
+        </div>
+        <span class="badge-dur" id="badgeDur"></span>
+      </div>
+
+      <div class="card-body">
+        <h2 class="card-title" id="vidTitle"></h2>
+        <p class="card-uploader" id="vidUploader"></p>
+
+        <!-- Controls row -->
+        <div class="controls-top">
+          <button class="btn-clip" id="btnClip">
+            <img src="scissors.png" style="width:28px;height:28px;object-fit:contain;" alt="Clip">
+            Clip it!
+          </button>
+        </div>
+        <div class="controls">
+          <!-- Format toggle -->
+          <div class="format-toggle">
+            <span class="fmt active" id="fmtMp4">MP4</span>
+            <label class="switch">
+              <input type="checkbox" id="fmtSwitch">
+              <span class="slider"></span>
+            </label>
+            <span class="fmt" id="fmtMp3">MP3</span>
+          </div>
+
+          <!-- Quality -->
+          <div class="quality-wrap" id="qualityWrap">
+            <select id="qualitySelect"></select>
+          </div>
+        </div>
+
+        <!-- Download -->
+        <button class="btn-download" id="dlBtn">
+          <svg class="dl-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          <span id="dlLabel">Download MP4</span>
+        </button>
+
+        <!-- Progress -->
+        <div class="progress-wrap" id="progressWrap">
+          <div class="progress-track">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+          <span class="progress-pct" id="progressPct">0%</span>
+          <button class="btn-cancel" id="btnCancel" title="Cancel Download">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+
+        <!-- Done -->
+        <div class="done-row" id="doneRow">
+          <svg class="done-check" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          <span class="done-text" id="doneText">Saved!</span>
+          <button class="btn-folder" id="folderBtn">Show in Folder</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="renderer.js"></script>
+</body>
+</html>

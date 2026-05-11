@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    height: 100vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    background: #0a0a12;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    -webkit-app-region: drag;
+    overflow: hidden;
+    border-radius: 16px;
+  }
+  .title {
+    font-size: 48px; font-weight: 800;
+    background: linear-gradient(135deg, #7c3aed, #3b82f6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: fadeIn .5s ease;
+  }
+  .sub {
+    margin-top: 14px; color: #64748b;
+    font-size: 13px; font-weight: 400;
+    animation: fadeIn .8s ease;
+  }
+  .loader {
+    margin-top: 28px; width: 28px; height: 28px;
+    border: 3px solid rgba(124,58,237,.12);
+    border-top-color: #7c3aed;
+    border-radius: 50%;
+    animation: spin .65s linear infinite, fadeIn 1s ease;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  @keyframes fadeIn { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:translateY(0); } }
+</style>
+</head>
+<body>
+  <div class="title">GrabIt</div>
+  <p class="sub">Loading…</p>
+  <div class="loader"></div>
+</body>
+</html>

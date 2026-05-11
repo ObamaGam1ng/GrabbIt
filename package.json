@@ -1,0 +1,35 @@
+{
+  "name": "grabit",
+  "version": "1.0.0",
+  "description": "Paste a link, preview, and download videos as MP4 or MP3",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder --win portable"
+  },
+  "build": {
+    "appId": "com.grabit.app",
+    "productName": "GrabbIt",
+    "win": {
+      "target": "portable"
+    },
+    "portable": {
+      "artifactName": "GrabbIt.exe"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "src/**/*"
+    ],
+    "asarUnpack": [
+      "node_modules/ffmpeg-static/**"
+    ]
+  },
+  "dependencies": {
+    "ffmpeg-static": "^5.2.0"
+  },
+  "devDependencies": {
+    "electron": "^33.0.0",
+    "electron-builder": "^25.0.0"
+  }
+}
