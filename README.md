@@ -10,7 +10,6 @@
 
 Instead of downloading massive, hour-long videos just to extract a 10-second meme, GrabbIt features an **In-App Streaming Player** equipped with custom timeline clipping handles. Simply drag to select the exact milliseconds you want, and GrabbIt will extract and download *only* that specific clip!
 
-✨ *Vibe Coded with Antigravity by Google DeepMind.* ✨
 
 ## ⚡ Features
 
